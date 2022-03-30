@@ -1,5 +1,4 @@
 ﻿#include <iostream>
-#include <cstdlib>
 #include <vector>
 #include <string>
 
@@ -33,7 +32,6 @@ struct Floor
 	std::vector <Room> roomsV;
 };
 
-
 struct Piece {
 
 	std::string ID;
@@ -64,6 +62,52 @@ struct Piece {
 	} bathhouse;
 };
 
+Piece fillingPiece();
+
+Floor fillingFloor();
+
+void fillingHouse(Piece& piece);
+
+void fillingGarage(Piece& piece);
+
+void fillingBarn(Piece& piece);
+
+void fillingBathhouse(Piece& piece);
+
+int fillingSquare(const std::string &buildings);
+
+void wait();
+
+void showing(std::vector <Piece>& piecesCompleted);
+
+int totalPieces;
+
+int main()
+{
+
+	std::cout << "Enter total piece of land: ";
+	std::cin >> totalPieces;
+	std::vector <Piece> piecesCompleted;
+
+	for (int i = 1; i <= totalPieces; ++i)
+	{
+		system("cls");
+		std::cout << "Filling " << i << " piece of land " << std::endl << std::endl;
+		piecesCompleted.push_back(fillingPiece());
+	}
+
+	showing(piecesCompleted);
+}
+
+void wait()
+{
+	std::cout << std::endl << "Enter 0 to return to selecting the presence of buildings: ";
+	char answer;
+	do
+		std::cin >> answer;
+	while (answer != '0');
+}
+
 int fillingSquare(const std::string& buildings)
 {
 	int tmp;
@@ -71,17 +115,6 @@ int fillingSquare(const std::string& buildings)
 	std::cin >> tmp;
 	return tmp;
 }
-
-void wait()
-{
-	std::cout << std::endl << "Enter 0 to continue: ";
-	std::string answer;
-	do
-		std::cin >> answer;
-	while (answer != "0");
-}
-
-
 
 Floor fillingFloor()
 {
@@ -97,7 +130,7 @@ Floor fillingFloor()
 	for (int i = 1; i <= roomCount; ++i)
 	{
 		system("cls");
-		std::cout << "What is the purpose of room type " << i << "?" << std::endl;
+		std::cout << "What is the purpose of room  " << i << "?" << std::endl;
 		std::cout << BEDROOM << ". Bedroom;" << std::endl;
 		std::cout << KITCHEN << ". Kitchen;" << std::endl;
 		std::cout << CHILDRENS_ROOM << ". Childrens room;" << std::endl;
@@ -154,7 +187,6 @@ void fillingHouse(Piece& piece)
 	}
 }
 
-
 void fillingGarage(Piece& piece)
 {
 	piece.garage.select = true;
@@ -207,7 +239,7 @@ void fillingBathhouse(Piece& piece)
 	else
 	{
 		std::cout << "There is a bathhouse on the plot" << std::endl;
-		std::cout << "Does you bathhouse has chimney? (y/n): ";
+		std::cout << "Does you bathhouse has furnace? (y/n): ";
 		std::cin >> answer;
 		if (answer == 'y')
 			piece.bathhouse.furnace = true;
@@ -264,30 +296,7 @@ Piece fillingPiece()
 	return pieceCompleted;
 }
 
-void showing(std::vector <Piece>& piecesCompleted);
-
-
-
-int totalPieces;
-
-int main()
-{
-	
-	std::cout << "Enter total piece of land: ";
-	std::cin >> totalPieces;
-	std::vector <Piece> piecesCompleted;
-
-	for (int i = 1; i <= totalPieces; ++i)
-	{
-		system("cls");
-		std::cout << "Filling " << i << " piece of land " << std::endl << std::endl;
-		piecesCompleted.push_back(fillingPiece());
-	}
-
-	showing(piecesCompleted);
-}
-
-void showing(std::vector <Piece>& piecesCompleted)
+void showing(std::vector <Piece> &piecesCompleted)
 {
 	int totalSquare = 0;
 	int totalBuildings = totalPieces;
